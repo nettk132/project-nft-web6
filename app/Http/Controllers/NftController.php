@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\nft;
+use App\Models\catagories;
 use App\Http\Requests\StorenftRequest;
 use App\Http\Requests\UpdatenftRequest;
 
@@ -13,7 +14,9 @@ class NftController extends Controller
      */
     public function index()
     {
-        $nftdata = nft::all();
+        $nftdata = nft::join('catagories','catagories.catagory_id','=','nfts.catagory_id')
+        ->select('nfts.*','catagory_name')
+        ->get();
         return view('nft', compact('nftdata'));
     }
 
@@ -36,9 +39,12 @@ class NftController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(nft $nft)
+    public function show(nft $nft , $id)
     {
-        //
+        $nftdata = nft::join('catagories','catagories.catagory_id','=','nfts.catagory_id')
+        ->select('nfts.*','catagory_name')
+        ->get();
+    return view('productnft', compact('nftdata','id'));
     }
 
     /**

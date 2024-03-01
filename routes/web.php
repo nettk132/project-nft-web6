@@ -33,4 +33,11 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/nft', [NftController::class, 'index'])->name('nftdata');
+
 });
+
+
+
+Route::get('/nft/{id}', [NftController::class, 'show'])->name('nftid');
+
+
