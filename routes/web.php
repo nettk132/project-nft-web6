@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\nftController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,11 +34,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/nft', [NftController::class, 'index'])->name('nftdata');
-
+    Route::get('/nft/{id}', [NftController::class, 'show'])->name('nftid');
+    Route::get('/order', [OrderController::class, 'index'])->name('orderdata');
+    Route::post('/order/add', [OrderController::class, 'store'])->name('Addorder');
 });
-
-
-
-Route::get('/nft/{id}', [NftController::class, 'show'])->name('nftid');
-
-
