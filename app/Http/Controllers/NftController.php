@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\nft;
 use App\Models\catagories;
 use App\Http\Requests\StorenftRequest;
@@ -17,7 +18,11 @@ class NftController extends Controller
         $nftdata = nft::join('catagories','catagories.catagory_id','=','nfts.catagory_id')
         ->select('nfts.*','catagory_name')
         ->get();
-        return view('nft', compact('nftdata'));
+        $orderdata = Order::join('users', 'orders.user_id', '=', 'users.id')
+        ->join('nfts', 'orders.nft_id', '=', 'nfts.nft_id')
+        ->select('orders.*', 'users.*', 'nfts.*')
+        ->get();
+        return view('nft', compact('nftdata', 'orderdata'));
     }
 
     /**
@@ -41,10 +46,15 @@ class NftController extends Controller
      */
     public function show(nft $nft , $id)
     {
+        $orderdata = Order::join('users', 'orders.user_id', '=', 'users.id')
+        ->join('nfts', 'orders.nft_id', '=', 'nfts.nft_id')
+        ->select('orders.*', 'users.*', 'nfts.*')
+        ->get();
+        
         $nftdata = nft::join('catagories','catagories.catagory_id','=','nfts.catagory_id')
         ->select('nfts.*','catagory_name')
         ->get();
-    return view('productnft', compact('nftdata','id'));
+    return view('productnft', compact('nftdata','id','orderdata'));
     }
 
     /**

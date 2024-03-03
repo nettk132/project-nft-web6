@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\nftController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AddressController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,4 +40,7 @@ Route::middleware([
     Route::get('/order', [OrderController::class, 'index'])->name('order');
     Route::post('/orders', [OrderController::class, 'store'])->name('orderstorecar');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+
+    Route::get('/Address',[AddressController::class, 'index'])->name('address');
+    Route::post('/Address_add',[AddressController::class, 'store'])->name('address.add');
 });

@@ -13,7 +13,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
+        $addressdata = address::all();
+        return view('Address', compact('addressdata'));
     }
 
     /**

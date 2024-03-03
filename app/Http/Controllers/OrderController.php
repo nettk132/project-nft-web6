@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Http\Requests\StoreorderRequest;
 use App\Http\Requests\UpdateorderRequest;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -20,7 +21,7 @@ class OrderController extends Controller
         ->join('nfts', 'orders.nft_id', '=', 'nfts.nft_id')
         ->select('orders.*', 'users.*', 'nfts.*')
         ->get();
-        return view('Order', compact('orderdata'));
+        return view('order', compact('orderdata'));
     }
 
     /**
@@ -52,7 +53,8 @@ class OrderController extends Controller
             'nft_id' => $validatedData['nft_id'],
             // สามารถเพิ่มฟิลด์อื่น ๆ ตามต้องการได้
         ]);
-    return view('order', compact('orderdata'));
+        return redirect()->route('nftdata');
+    //return view('order', compact('orderdata'));
     }
 
     /**
@@ -82,21 +84,21 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(order $order,$id)
+    public function destroy(order $order, $nft_id)
     {
-       // ค้นหาคำสั่งซื้อโดยใช้ ID
-    $order = Order::findOrFail($id);
-
-    // ตรวจสอบว่าผู้ใช้ที่ล็อกอินเข้าถึงคำสั่งซื้อเป็นเจ้าของหรือไม่
-    if ($order->user_id === auth()->id()) {
-        // ลบคำสั่งซื้อ
-        $order->delete();
-
-        // ส่งกลับการสำเร็จและข้อความที่ต้องการ
-        return redirect()->route('order')->with('success', 'Order deleted successfully');
-    } else {
-        // ถ้าไม่ใช่เจ้าของคำสั่งซื้อ
-        return redirect()->route('order')->with('error', 'You are not authorized to delete this order');
+        $order = Order::where('user_id', auth()->id())->findOrFail($nft_id);
+        // ค้นหาคำสั่งซื้อโดยใช้ ID
+        Log::info($order);
+        // เช็คว่า user_id ของคำสั่งซื้อตรงกับผู้ใช้ที่เข้าสู่ระบบหรือไม่
+        if ($order->user_id === auth()->id()) {
+            // ลบคำสั่งซื้อ
+            $order->delete();
+            // ส่งกลับการสำเร็จและข้อความที่ต้องการ
+            return redirect()->route('order');
+        } else {
+            // ถ้าไม่ตรงกัน ส่งกลับผู้ใช้กลับไปที่หน้าที่เหมาะสม หรือส่งข้อความแจ้งเตือน
+            return redirect()->back()->with('error', 'You are not authorized to delete this order.');
+        }
     }
-    }
+
 }
