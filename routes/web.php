@@ -35,6 +35,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/nft', [NftController::class, 'index'])->name('nftdata');
     Route::get('/nft/{id}', [NftController::class, 'show'])->name('nftid');
-    Route::get('/order', [OrderController::class, 'index'])->name('orderdata');
-    Route::post('/order/add', [OrderController::class, 'store'])->name('Addorder');
+
+    Route::get('/order', [OrderController::class, 'index'])->name('order');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orderstorecar');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 });
