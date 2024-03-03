@@ -53,7 +53,7 @@ class OrderController extends Controller
             'nft_id' => $validatedData['nft_id'],
             // สามารถเพิ่มฟิลด์อื่น ๆ ตามต้องการได้
         ]);
-        return redirect()->route('nftdata');
+        return redirect()->route('order');
     //return view('order', compact('orderdata'));
     }
 

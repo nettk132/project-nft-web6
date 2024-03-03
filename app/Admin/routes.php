@@ -15,5 +15,6 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
 
     $router->resource('orders', order::class);
+    $router->resource('addressdatas', addressdataController::class);
     $router->resource('nftdatas', nftdataControllers::class);
 });

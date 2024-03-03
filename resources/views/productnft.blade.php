@@ -30,15 +30,16 @@
                 </div>
 
                 <div class="buttons">
-                    <a href="{{ route('nftid', ['id' => $nft->nft_id]) }}" class="btn btn-primary">รายละเอียด</a>
+
                     @if ($orderdata->where('nft_id', $nft->nft_id)->isNotEmpty())
                     <h1 >อยู่ในตะกร้า</h1>
                     @else
+
                     <form  method="POST" action="{{ route('orderstorecar') }}">
                     @csrf <!-- เพิ่ม CSRF token เพื่อความปลอดภัย -->
                     <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                     <input type="hidden" name="nft_id" value="{{ $nft->nft_id }}">
-                    <button>
+                    <button type="submit" onclick="redirectToOrder()">
                         <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 36 36"
@@ -82,6 +83,7 @@
                         <span class="now">now!</span>
                         <span class="play">BUY</span>
                     </button>
+
                 </form>
                 @endif
             </div>
@@ -241,4 +243,10 @@
         }
 
     </style>
+
+<script>
+    function redirectToOrder() {
+        window.location.href = "{{ route('order') }}";
+    }
+</script>
 </x-app-layout>

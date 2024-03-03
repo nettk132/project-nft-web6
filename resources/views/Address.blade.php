@@ -4,32 +4,81 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="py-4">
 
-                    <div class="col-span-6 sm:col-span-3">
-                        <label for="first_name" class="block text-sm font-medium text-gray-700">first_name</label>
-                        <input type="text" name="first_name" id="first_name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <div class="form-container">
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="province" class="form-label">{{ __('Province') }}</label>
+                                <input id="province" class="form-input" type="text" name="province" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="district" class="form-label">{{ __('District') }}</label>
+                                <input id="district" class="form-input" type="text" name="district">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address_1" class="form-label">{{ __('Address') }}</label>
+                                <input id="address_1" class="form-input" type="text" name="address_1" required>
+                            </div>
+
+                            <button type="submit" class="form-button">{{ __('Submit') }}</button>
+                        </form>
                     </div>
 
-                    <div class="col-span-6 sm:col-span-3">
-                        <label for="last_name" class="block text-sm font-medium text-gray-700">last_name</label>
-                        <input type="text" name="last_name" id="last_name" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
-
-                    <label for="province" class="block text-sm font-medium text-gray-700">จังหวัด</label>
-                    <input type="text" name="province" id="province" autocomplete="province" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-
-                    <div class="col-span-6 sm:col-span-3">
-                        <label for="district" class="block text-sm font-medium text-gray-700">อำเภอ</label>
-                        <input type="text" name="district" id="district" autocomplete="address-level2" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
-
-                    <div class="col-span-6">
-                        <label for="address_1" class="block text-sm font-medium text-gray-700">ที่อยู่</label>
-                        <input type="text" name="address_1" id="address_1" autocomplete="address-line1" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
-
-                    
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function submitForm() {
+            var form = document.getElementById('addressForm');
+            form.submit(); // Submit the form
+
+            // Redirect to the home page after form submission
+            window.location.href = "{{ route('nftdata') }}";
+        }
+    </script>
 </x-app-layout>
+
+<style>
+/* styles.css */
+
+.form-container {
+    max-width: 500px;
+    margin: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+</style>

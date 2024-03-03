@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class address extends Model
 {
     use HasFactory;
+    protected $table = 'addresses';
+
+    protected $primaryKey = 'address_id';
+    protected $fillable = [
+        'province',
+        'disctrict',
+        'address_1',
+    ];
 }

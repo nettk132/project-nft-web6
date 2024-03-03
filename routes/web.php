@@ -42,5 +42,5 @@ Route::middleware([
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
 
     Route::get('/Address',[AddressController::class, 'index'])->name('address');
-    Route::post('/Address_add',[AddressController::class, 'store'])->name('address.add');
+    Route::post('/Address',[AddressController::class, 'store'])->name('address');
 });
